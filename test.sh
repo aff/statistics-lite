@@ -13,5 +13,6 @@ export PERL6LIB=lib
 
 for FILE in `ls t/*.t`
 do 
+  echo "$FILE"
   ../rakudo/perl6 $FILE
 done
