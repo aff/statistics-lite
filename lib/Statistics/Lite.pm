@@ -29,14 +29,13 @@ sub max (*@numbers)
 # 	return $max - $min;
 # }
 
-# sub sum
-# {
-# 	return unless @_;
-# 	return $_[0] unless @_ > 1;
-# 	my $sum;
-# 	foreach(@_) { $sum+= $_; }
-# 	return $sum;
-# }
+sub sum (*@numbers)
+{
+	return unless @numbers;
+	my $sum = 0;
+	for @numbers { $sum += $_; }
+	return $sum;
+}
 
 # sub mean
 # {
