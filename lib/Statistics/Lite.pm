@@ -14,7 +14,7 @@ sub max (*@numbers)
 {
   return unless @numbers;
   my $max = shift @numbers;
-  for @numbers{ $max = $_ if $_ > $max; }
+  for @numbers { $max = $_ if $_ > $max; }
   return $max;
 }
 
@@ -37,15 +37,16 @@ sub mean (*@numbers)
 	return sum(@numbers) / @numbers.elems;
 }
 
-# sub median
-# {
-# 	return unless @numbers;
-# 	return $_[0] unless @numbers > 1;
-# 	@numbers= sort{$a<=>$b}@numbers;
-# 	return $_[$#_/2] if @numbers&1;
-# 	my $mid= @numbers/2;
-# 	return ($_[$mid-1]+$_[$mid])/2;
-# }
+sub median (*@numbers)
+{
+	return unless @numbers;
+ 	return @numbers[0] unless @numbers.elems > 1;
+	my @sorted = @numbers.sort;
+    my $mid = (@sorted.elems - 1) / 2;
+	return @sorted[$mid] if @sorted.elems % 2;    # odd
+    $mid = (@sorted.elems) / 2;
+	return (@sorted[$mid-1] + @sorted[$mid]) / 2; # even
+}
 
 # sub mode
 # {
