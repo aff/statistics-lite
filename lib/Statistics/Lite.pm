@@ -40,7 +40,6 @@ sub mean (*@numbers)
 sub median (*@numbers)
 {
 	return unless @numbers;
- 	return @numbers[0] unless @numbers.elems > 1;
 	my @sorted = @numbers.sort;
     my $mid = (@sorted.elems - 1) / 2;
 	return @sorted[$mid] if @sorted.elems % 2;    # odd
@@ -48,16 +47,16 @@ sub median (*@numbers)
 	return (@sorted[$mid-1] + @sorted[$mid]) / 2; # even
 }
 
-# sub mode
-# {
-# 	return unless @numbers;
-# 	return $_[0] unless @numbers > 1;
-# 	my %count;
-# 	foreach(@numbers) { $count{$_}++; }
-# 	my $maxhits= max(values %count);
-# 	foreach(keys %count) { delete $count{$_} unless $count{$_} == $maxhits; }
-# 	return mean(keys %count);
-# }
+sub mode (*@numbers)
+{
+	return unless @numbers;
+	return @numbers[0] if @numbers.elems == 1;
+	my %count = ();
+	for @numbers { %count{$_}++; }
+	my $maxhits = max(%count.values);
+	for keys %count { %count.delete($_) if %count{$_} != $maxhits; }
+	return mean(keys %count);
+}
 
 # sub variance
 # {

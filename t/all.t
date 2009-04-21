@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 24;
+plan 33;
 
 use lib 'lib';
 use Statistics::Lite;
@@ -36,4 +36,15 @@ is(Statistics::Lite::median(<5 4 3 2 1>), 3, q{median 5 4 3 2 1 -> 3});
 is(Statistics::Lite::median(1, 5, 2, 10, 8, 7), 6, q{median 1, 5, 2, 10, 8, 7 -> 6});
 
 is(Statistics::Lite::median(), undef, q{median undef -> undef});
+
+
+is(Statistics::Lite::mode(5), 5, q{mode 5});
+is(Statistics::Lite::mode(<1 2 3>), 2, q{mode 1 2 3 -> 2});
+is(Statistics::Lite::mode(<3 2 1>), 2, q{mode 3 2 1 -> 2});
+is(Statistics::Lite::mode(<3 3 2 1>), 3, q{mode });
+is(Statistics::Lite::mode(<3 3 2 2 1>), 2.5, q{mode });
+is(Statistics::Lite::mode(<5 4 3 2 1>), 3, q{mode 5 4 3 2 1 -> 3});
+is(Statistics::Lite::mode(<5 4 4 3 2 1>), 4, q{mode 5 4 3 2 1 -> 3});
+is(Statistics::Lite::mode(<1, 3, 6, 6, 6, 6, 7, 7, 12, 12, 17>), 6, q{mode 6});
+is(Statistics::Lite::mode(), undef, q{mode undef -> undef});
 
