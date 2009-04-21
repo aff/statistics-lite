@@ -48,7 +48,7 @@ sub median (*@numbers)
 }
 
 sub mode (*@numbers)
-{
+ {
 	return unless @numbers;
 	return @numbers[0] if @numbers.elems == 1;
 	my %count = ();
@@ -58,35 +58,35 @@ sub mode (*@numbers)
 	return mean(keys %count);
 }
 
-# sub variance
-# {
-# 	return unless @numbers;
-# 	return 0 unless @numbers > 1;
-# 	my $mean= mean @numbers;
-# 	return (sum map { ($_ - $mean)**2 } @numbers) / $#_;
-# }
+sub variance (*@numbers)
+{
+	return unless @numbers;
+	return 0 if @numbers.elems == 1;
+    my $sqr_sum = [+] @numbers.map: { $_ * $_ };
+	return ($sqr_sum - sum(@numbers) * mean(@numbers)) / (@numbers.elems - 1);
+}
 
-# sub variancep
-# {
-# 	return unless @numbers;
-# 	return 0 unless @numbers > 1;
-# 	my $mean= mean @numbers;
-# 	return (sum map { ($_ - $mean)**2 } @numbers) / ( $#_ +1 );
-# }
+sub variancep (*@numbers)
+{
+	return unless @numbers;
+	return 0 if @numbers.elems == 1;
+    my $sqr_sum = [+] @numbers.map: { $_ * $_ };
+	return ($sqr_sum - sum(@numbers) * mean(@numbers)) / @numbers.elems;
+}
 
-# sub stddev
-# {
-# 	return unless @numbers;
-# 	return 0 unless @numbers > 1;
-# 	return sqrt variance @numbers;
-# }
+sub stddev (*@numbers)
+{
+	return unless @numbers;
+	return 0 if @numbers.elems == 1;
+	return sqrt variance @numbers;
+}
 
-# sub stddevp
-# {
-# 	return unless @numbers;
-# 	return 0 unless @numbers > 1;
-# 	return sqrt variancep @numbers;
-# }
+sub stddevp (*@numbers)
+{
+	return unless @numbers;
+	return 0 if @numbers.elems == 1;
+	return sqrt variancep @numbers;
+}
 
 # sub statshash
 # {
