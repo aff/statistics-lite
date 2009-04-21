@@ -19,47 +19,40 @@ sub max (*@numbers)
 }
 
 
-# sub range
-# {
-# 	return unless @_;
-# 	return 0 unless @_ > 1;
-# 	return abs($_[1]-$_[0]) unless @_ > 2;
-# 	my $min= shift; my $max= $min;
-# 	foreach(@_) { $min= $_ if $_ < $min; $max= $_ if $_ > $max; }
-# 	return $max - $min;
-# }
+sub range (*@numbers)
+{
+ 	return unless @_;
+ 	return max(@numbers) - min (@numbers);
+}
 
 sub sum (*@numbers)
 {
-	return unless @numbers;
-	my $sum = 0;
-	for @numbers { $sum += $_; }
-	return $sum;
+ 	return unless @numbers;
+    return [+] @numbers;
 }
 
-# sub mean
-# {
-# 	return unless @_;
-# 	return $_[0] unless @_ > 1;
-# 	return sum(@_)/scalar(@_);
-# }
+sub mean (*@numbers)
+{
+	return unless @numbers;
+	return sum(@numbers) / @numbers.elems;
+}
 
 # sub median
 # {
-# 	return unless @_;
-# 	return $_[0] unless @_ > 1;
-# 	@_= sort{$a<=>$b}@_;
-# 	return $_[$#_/2] if @_&1;
-# 	my $mid= @_/2;
+# 	return unless @numbers;
+# 	return $_[0] unless @numbers > 1;
+# 	@numbers= sort{$a<=>$b}@numbers;
+# 	return $_[$#_/2] if @numbers&1;
+# 	my $mid= @numbers/2;
 # 	return ($_[$mid-1]+$_[$mid])/2;
 # }
 
 # sub mode
 # {
-# 	return unless @_;
-# 	return $_[0] unless @_ > 1;
+# 	return unless @numbers;
+# 	return $_[0] unless @numbers > 1;
 # 	my %count;
-# 	foreach(@_) { $count{$_}++; }
+# 	foreach(@numbers) { $count{$_}++; }
 # 	my $maxhits= max(values %count);
 # 	foreach(keys %count) { delete $count{$_} unless $count{$_} == $maxhits; }
 # 	return mean(keys %count);
@@ -67,37 +60,37 @@ sub sum (*@numbers)
 
 # sub variance
 # {
-# 	return unless @_;
-# 	return 0 unless @_ > 1;
-# 	my $mean= mean @_;
-# 	return (sum map { ($_ - $mean)**2 } @_) / $#_;
+# 	return unless @numbers;
+# 	return 0 unless @numbers > 1;
+# 	my $mean= mean @numbers;
+# 	return (sum map { ($_ - $mean)**2 } @numbers) / $#_;
 # }
 
 # sub variancep
 # {
-# 	return unless @_;
-# 	return 0 unless @_ > 1;
-# 	my $mean= mean @_;
-# 	return (sum map { ($_ - $mean)**2 } @_) / ( $#_ +1 );
+# 	return unless @numbers;
+# 	return 0 unless @numbers > 1;
+# 	my $mean= mean @numbers;
+# 	return (sum map { ($_ - $mean)**2 } @numbers) / ( $#_ +1 );
 # }
 
 # sub stddev
 # {
-# 	return unless @_;
-# 	return 0 unless @_ > 1;
-# 	return sqrt variance @_;
+# 	return unless @numbers;
+# 	return 0 unless @numbers > 1;
+# 	return sqrt variance @numbers;
 # }
 
 # sub stddevp
 # {
-# 	return unless @_;
-# 	return 0 unless @_ > 1;
-# 	return sqrt variancep @_;
+# 	return unless @numbers;
+# 	return 0 unless @numbers > 1;
+# 	return sqrt variancep @numbers;
 # }
 
 # sub statshash
 # {
-# 	return unless @_;
+# 	return unless @numbers;
 # 	return
 # 	(
 # 		count     => 1,
@@ -112,15 +105,15 @@ sub sum (*@numbers)
 # 		stddev    => 0,
 # 		variancep => 0,
 # 		stddevp   => 0
-# 	) unless @_ > 1;
-# 	my $count= scalar(@_);
-# 	@_= sort{$a<=>$b}@_;
+# 	) unless @numbers > 1;
+# 	my $count= scalar(@numbers);
+# 	@numbers= sort{$a<=>$b}@numbers;
 # 	my $median;
-# 	if(@_&1) { $median= $_[$#_/2]; }
-# 	else { my $mid= @_/2; $median= ($_[$mid-1]+$_[$mid])/2; }
+# 	if(@numbers&1) { $median= $_[$#_/2]; }
+# 	else { my $mid= @numbers/2; $median= ($_[$mid-1]+$_[$mid])/2; }
 # 	my $sum= 0;
 # 	my %count;
-# 	foreach(@_) { $sum+= $_; $count{$_}++; }
+# 	foreach(@numbers) { $sum+= $_; $count{$_}++; }
 # 	my $mean= $sum/$count;
 # 	my $maxhits= max(values %count);
 # 	foreach(keys %count) 
@@ -135,16 +128,16 @@ sub sum (*@numbers)
 # 		mean      => $mean,
 # 		median    => $median,
 # 		mode      => mean(keys %count),
-# 		variance  => variance(@_),
-# 		stddev    => stddev(@_),
-# 		variancep => variancep(@_),
-# 		stddevp   => stddevp(@_)
+# 		variance  => variance(@numbers),
+# 		stddev    => stddev(@numbers),
+# 		variancep => variancep(@numbers),
+# 		stddevp   => stddevp(@numbers)
 # 	);
 # }
 
 # sub statsinfo
 # {
-# 	my %stats= statshash(@_);
+# 	my %stats= statshash(@numbers);
 # 	return <<".";
 # min       = $stats{min}
 # max       = $stats{max}
@@ -163,9 +156,50 @@ sub sum (*@numbers)
 
 # sub frequencies
 # {
-# 	return unless @_;
-# 	return ( $_[0], 1 ) unless @_ > 1;
+# 	return unless @numbers;
+# 	return ( $_[0], 1 ) unless @numbers > 1;
 # 	my %count;
-# 	foreach(@_) { $count{$_}++; }
+# 	foreach(@numbers) { $count{$_}++; }
 # 	return %count;
 # }
+
+
+# is(min(1,2,3),    1, "call min - functional interface");
+# is(max(1,2,3),    3, "call max - functional interface");
+# is(range(1,2,3),  2, "call range - functional interface");
+# is(sum(1,2,3),    6, "call sum - functional interface");
+# is(count(1,2,3),  3, "call count - functional interface");
+# is(mean(1,2,3),   2, "call mean - functional interface");
+# is(median(1,2,3), 2, "call median - functional interface");
+# is(mode(1,2,3),   2, "call mode - functional interface");
+
+# is(variance(1,2,3), 1, "call variance - functional interface");
+# is(stddev(1,2,3),   1, "call stddev - functional interface");
+
+# is(variancep(2,4,2,4), 1, "call variancep - functional interface");
+# is(stddevp(2,4,2,4),   1, "call stddevp - functional interface");
+
+
+# my %stats= statshash(1,2,3);
+
+# is($stats{min},    1, "call min - hash-based interface");
+# is($stats{max},    3, "call max - hash-based interface");
+# is($stats{range},  2, "call range - hash-based interface");
+# is($stats{sum},    6, "call sum - hash-based interface");
+# is($stats{count},  3, "call count - hash-based interface");
+# is($stats{mean},   2, "call mean - hash-based interface");
+# is($stats{median}, 2, "call median - hash-based interface");
+# is($stats{mode},   2, "call mode - hash-based interface");
+
+# is($stats{variance}, 1, "call variance - hash-based interface");
+# is($stats{stddev},   1, "call stddev - hash-based interface");
+
+
+# %stats= statshash(2,4,2,4);
+# ok($stats{variancep}, "call variancep - hash-based interface");
+# ok($stats{stddevp},   "call stddevp - hash-based interface");
+
+# %stats= frequencies(1,2,3,3);
+# is($stats{1},1, "frequencies matched correctly");
+# is($stats{2},1, "frequencies matched correctly");
+# is($stats{3},2, "frequencies matched correctly");
