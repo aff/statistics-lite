@@ -79,3 +79,7 @@ is(Statistics::Lite::stddev(<123 456 789>), 333, q{variance <123 456 789> -> 333
 is_approx(Statistics::Lite::stddevp(<3 2 -1>), 1.69967317119759, q{variance is_approx 3 2 -1 -> 1.69967317119759});
 is(Statistics::Lite::stddevp(<1>), 0, q{stddevp 1 -> 0});
 is(Statistics::Lite::stddevp(<123 456 789>), 271.893361448933, q{variance <123 456 789> -> 271.893361448933});
+
+# statshash
+my %h = Statistics::Lite::statshash(1,2,3);
+#say %h.perl;

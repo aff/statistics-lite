@@ -3,7 +3,7 @@ package Statistics::Lite;
 use v6;
 
 sub min (*@numbers)
-{ 
+{
   return unless @numbers;
   my $min = shift @numbers;
   for @numbers { $min = $_ if $_ < $min; }
@@ -21,124 +21,98 @@ sub max (*@numbers)
 
 sub range (*@numbers)
 {
- 	return unless @_;
- 	return max(@numbers) - min (@numbers);
+    return unless @_;
+	return 1; ####################### !!!
+    return max(@numbers) - min (@numbers);
 }
 
 sub sum (*@numbers)
 {
- 	return unless @numbers;
+    return unless @numbers;
     return [+] @numbers;
 }
 
 sub mean (*@numbers)
 {
-	return unless @numbers;
-	return sum(@numbers) / @numbers.elems;
+    return unless @numbers;
+    return sum(@numbers) / @numbers.elems;
 }
 
 sub median (*@numbers)
 {
-	return unless @numbers;
-	my @sorted = @numbers.sort;
+    return unless @numbers;
+    my @sorted = @numbers.sort;
     my $mid = (@sorted.elems - 1) / 2;
-	return @sorted[$mid] if @sorted.elems % 2;    # odd
+    return @sorted[$mid] if @sorted.elems % 2;    # odd
     $mid = (@sorted.elems) / 2;
-	return (@sorted[$mid-1] + @sorted[$mid]) / 2; # even
+    return (@sorted[$mid-1] + @sorted[$mid]) / 2; # even
 }
 
 sub mode (*@numbers)
  {
-	return unless @numbers;
-	return @numbers[0] if @numbers.elems == 1;
-	my %count = ();
-	for @numbers { %count{$_}++; }
-	my $maxhits = max(%count.values);
-	for keys %count { %count.delete($_) if %count{$_} != $maxhits; }
-	return mean(keys %count);
+    return unless @numbers;
+    return @numbers[0] if @numbers.elems == 1;
+    my %count = ();
+    for @numbers { %count{$_}++; }
+    my $maxhits = max(%count.values);
+    for keys %count { %count.delete($_) if %count{$_} != $maxhits; }
+    return mean(keys %count);
 }
 
 sub variance (*@numbers)
 {
-	return unless @numbers;
-	return 0 if @numbers.elems == 1;
+    return unless @numbers;
+    return 0 if @numbers.elems == 1;
     my $sqr_sum = [+] @numbers.map: { $_ * $_ };
-	return ($sqr_sum - sum(@numbers) * mean(@numbers)) / (@numbers.elems - 1);
+    return ($sqr_sum - sum(@numbers) * mean(@numbers)) / (@numbers.elems - 1);
 }
 
 sub variancep (*@numbers)
 {
-	return unless @numbers;
-	return 0 if @numbers.elems == 1;
+    return unless @numbers;
+    return 0 if @numbers.elems == 1;
     my $sqr_sum = [+] @numbers.map: { $_ * $_ };
-	return ($sqr_sum - sum(@numbers) * mean(@numbers)) / @numbers.elems;
+    return ($sqr_sum - sum(@numbers) * mean(@numbers)) / @numbers.elems;
 }
 
 sub stddev (*@numbers)
 {
-	return unless @numbers;
-	return 0 if @numbers.elems == 1;
-	return sqrt variance @numbers;
+    return unless @numbers;
+    return 0 if @numbers.elems == 1;
+    return sqrt variance @numbers;
 }
 
 sub stddevp (*@numbers)
 {
-	return unless @numbers;
-	return 0 if @numbers.elems == 1;
-	return sqrt variancep @numbers;
+    return unless @numbers;
+    return 0 if @numbers.elems == 1;
+    return sqrt variancep @numbers;
 }
 
-# sub statshash
-# {
-# 	return unless @numbers;
-# 	return
-# 	(
-# 		count     => 1,
-# 		min       => $_[0],
-# 		max       => $_[0],
-# 		range     => 0,
-# 		sum       => $_[0],
-# 		mean      => $_[0],
-# 		median    => $_[0],
-# 		mode      => $_[0],
-# 		variance  => 0,
-# 		stddev    => 0,
-# 		variancep => 0,
-# 		stddevp   => 0
-# 	) unless @numbers > 1;
-# 	my $count= scalar(@numbers);
-# 	@numbers= sort{$a<=>$b}@numbers;
-# 	my $median;
-# 	if(@numbers&1) { $median= $_[$#_/2]; }
-# 	else { my $mid= @numbers/2; $median= ($_[$mid-1]+$_[$mid])/2; }
-# 	my $sum= 0;
-# 	my %count;
-# 	foreach(@numbers) { $sum+= $_; $count{$_}++; }
-# 	my $mean= $sum/$count;
-# 	my $maxhits= max(values %count);
-# 	foreach(keys %count) 
-# 	{ delete $count{$_} unless $count{$_} == $maxhits; }
-# 	return
-# 	(
-# 		count     => $count,
-# 		min       => $_[0],
-# 		max       => $_[-1],
-# 		range     => ($_[-1] - $_[0]),
-# 		sum       => $sum,
-# 		mean      => $mean,
-# 		median    => $median,
-# 		mode      => mean(keys %count),
-# 		variance  => variance(@numbers),
-# 		stddev    => stddev(@numbers),
-# 		variancep => variancep(@numbers),
-# 		stddevp   => stddevp(@numbers)
-# 	);
-# }
+sub statshash (*@numbers) {
+  my %hash = (
+    count     => @numbers.elems,
+    min       => min(@numbers),
+    max       => max(@numbers),
+    range     => range(@numbers),
+    sum       => sum(@numbers),
+    mean      => mean(@numbers),
+    median    => median(@numbers),
+    mode      => mode(@numbers),
+    variance  => variance(@numbers),
+    stddev    => stddev(@numbers),
+    variancep => variancep(@numbers),
+    stddevp   => stddevp(@numbers),
+  );
+  return %hash;
+}
+
+
 
 # sub statsinfo
 # {
-# 	my %stats= statshash(@numbers);
-# 	return <<".";
+#   my %stats= statshash(@numbers);
+#   return <<".";
 # min       = $stats{min}
 # max       = $stats{max}
 # range     = $stats{range}
@@ -156,11 +130,11 @@ sub stddevp (*@numbers)
 
 # sub frequencies
 # {
-# 	return unless @numbers;
-# 	return ( $_[0], 1 ) unless @numbers > 1;
-# 	my %count;
-# 	foreach(@numbers) { $count{$_}++; }
-# 	return %count;
+#   return unless @numbers;
+#   return ( $_[0], 1 ) unless @numbers > 1;
+#   my %count;
+#   foreach(@numbers) { $count{$_}++; }
+#   return %count;
 # }
 
 
