@@ -1,0 +1,13 @@
+Set the following environment variables before you make run 
+`perl Makefile.PL`:
+
+  $ export PARROT_DIR=/path/to/parrot
+  $ export RAKUDO_DIR=/path/to/rakudo
+  $ export PERL6LIB=/path/to/repository/of/november/lib
+ 
+After that, you can build as usual.
+ 
+  $ perl Makefile.PL
+  $ make 
+  $ make test
+
