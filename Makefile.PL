@@ -35,7 +35,6 @@ if ( ! -d $rakudo_dir ) {
     exit 1;
 }
  
-#my @scripts = qw< test_wiki.sh wiki.sh >;
 my @infiles = map { $_.'.in' } qw< Makefile >;
  
 my %replacements = (
@@ -66,5 +65,4 @@ for my $infile (@infiles) {
     }
 }
  
-# Make shell-scripts executable
-# chmod 0744, @scripts;
+__END__
