@@ -1,6 +1,7 @@
 use v6;
 
-# All tests in one file since rakudo takes ages to start up.
+# All tests in one file since rakudo takes ages to start up (as of
+# April 2009).
 
 use Test;
 plan 51;
@@ -106,4 +107,6 @@ is_deeply(
   },
   "statshash"
 );
+
+=begin END
 

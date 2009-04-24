@@ -2,6 +2,30 @@ package Statistics::Lite;
 
 use v6;
 
+=head1 TITLE
+ 
+  Statistics::Lite - A small statistics package written in Perl 6.
+ 
+=head1 DESCRIPTION
+ 
+This is a re-write of the existing L<Statistics::Lite> on CPAN which
+is written in Perl 5.  It provides the most basic statistical
+functions only.
+
+=head1 SEE ALSO
+
+  L<http://search.cpan.org/perldoc?Statistics::Lite>
+
+=head1 AUTHOR
+
+ Andreas Faafeng, aff at cpan dot org.
+
+=head1 LICENCE
+
+ This program is released under the GNU General Public License.
+
+=cut
+
 sub min (*@numbers)
 {
   return unless @numbers;
@@ -115,4 +139,5 @@ sub statshash (*@numbers) {
   return %hash;
 }
 
+=begin END
 
