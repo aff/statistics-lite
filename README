@@ -1,9 +1,28 @@
+TITLE
+         Statistics::Lite - A small statistics package written in Perl 6.
+
+DESCRIPTION
+       This is a re-write of the existing Statistics::Lite on CPAN which is
+       written in Perl 5.  It provides the most basic statistical functions
+       only.
+
+SEE ALSO
+         L<http://search.cpan.org/perldoc?Statistics::Lite>
+
+AUTHOR
+        Andreas Faafeng, aff at cpan dot org.
+
+LICENCE
+        This program is released under the GNU General Public License.
+
+USAGE
+
 Set the following environment variables before you make run 
 `perl Makefile.PL`:
 
   $ export PARROT_DIR=/path/to/parrot
   $ export RAKUDO_DIR=/path/to/rakudo
-  $ export PERL6LIB=/path/to/repository/of/november/lib
+  $ export PERL6LIB=/path/to/lib/Statistics/Lite.pm
  
 After that, you can build as usual.
  
