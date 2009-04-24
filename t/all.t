@@ -3,7 +3,7 @@ use v6;
 # All tests in one file since rakudo takes ages to start up.
 
 use Test;
-plan 49;
+plan 51;
 
 use lib 'lib';
 use Statistics::Lite;
@@ -80,6 +80,30 @@ is_approx(Statistics::Lite::stddevp(<3 2 -1>), 1.69967317119759, q{variance is_a
 is(Statistics::Lite::stddevp(<1>), 0, q{stddevp 1 -> 0});
 is(Statistics::Lite::stddevp(<123 456 789>), 271.893361448933, q{variance <123 456 789> -> 271.893361448933});
 
+# frequencies
+is_deeply(
+  Statistics::Lite::frequencies(1,2,3,3),
+		  { 1 => 1, 2 => 1, 3 => 2 },
+  " frequencies"
+);
+
 # statshash
-my %h = Statistics::Lite::statshash(1,2,3);
-#say %h.perl;
+is_deeply(
+  Statistics::Lite::statshash(1,2,3),
+  {
+    "count"     => 3,
+    "min"       => 1,
+    "max"       => 3,
+    "range"     => 2,
+    "sum"       => 6,
+    "mean"      => 2,
+    "median"    => 2,
+    "mode"      => 2,
+    "variance"  => 1,
+    "stddev"    => 1,
+    "variancep" => 0.666666666666667,
+    "stddevp"   => 0.816496580927726
+  },
+  "statshash"
+);
+
