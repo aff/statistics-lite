@@ -2,6 +2,8 @@ package Statistics::Lite;
 
 use v6;
 
+=begin
+
 =head1 TITLE
  
   Statistics::Lite - A small statistics package written in Perl 6.
@@ -25,6 +27,8 @@ functions only.
  This program is released under the GNU General Public License.
 
 =cut
+
+=end
 
 sub min (*@numbers)
 {
