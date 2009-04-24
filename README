@@ -7,7 +7,7 @@ DESCRIPTION
        only.
 
 SEE ALSO
-         L<http://search.cpan.org/perldoc?Statistics::Lite>
+        http://search.cpan.org/perldoc?Statistics::Lite
 
 AUTHOR
         Andreas Faafeng, aff at cpan dot org.
@@ -17,16 +17,16 @@ LICENCE
 
 USAGE
 
-Set the following environment variables before you make run 
+Set the following environment variables before you make run
 `perl Makefile.PL`:
 
   $ export PARROT_DIR=/path/to/parrot
   $ export RAKUDO_DIR=/path/to/rakudo
   $ export PERL6LIB=/path/to/lib/Statistics/Lite.pm
- 
+
 After that, you can build as usual.
- 
+
   $ perl Makefile.PL
-  $ make 
+  $ make
   $ make test
 
